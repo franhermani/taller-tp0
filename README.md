@@ -31,7 +31,7 @@ El operador *sizeof()* representa el espacio en bytes que
 ocupa en memoria el tipo de dato recibido por parámetro.
 
 El valor de salida de *sizeof(char)* será de 1 byte,
-mientras que el de *sizeof(int)* sera de 4 bytes.
+mientras que el de *sizeof(int)* será de 4 bytes.
 
 #### d)
 
@@ -60,7 +60,7 @@ mientras que la suma de los *sizeof()* de sus elementos es
 
 #### e)
 
-A continuación, se detallan las características de los archivos estándar:
+A continuación, se detallan los archivos estándar:
 
 - STDIN (*Standard Input*). Entrada estándar del programa. Para redirigir la entrada
 a un archivo de texto plano, utilizar la sintaxis *./tp < archivo*
