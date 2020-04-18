@@ -195,3 +195,31 @@ a la librería estándar de C y, entre otras cosas, contiene la declaración
 de la función mencionada
 
 Todos los errores mencionados pertenecen a la etapa de compilación.
+
+#### Paso 3: SERCOM - Errores de generación 3
+
+#### a)
+
+Respecto de la versión anterior, se realizaron las siguientes correcciones:
+
+- Se incluyó el archivo *stdlib.h* en *paso3_wordscounter.c*.
+Esto soluciona la declaración implícita de la función *malloc()*.
+- Se incluyeron los archivos *string.h* y *stdio.h* en *paso3_wordscounter.h*.
+Esto soluciona el error de los tipos desconocidos *size_t* y *FILE*. A su vez,
+en el caso del *size_t*, resuelve el conflicto de tipos de la línea 17.
+
+#### b)
+
+El error de generación del ejecutable detectado por el SERCOM
+es el siguiente:
+
+![img7](images/img7.png)
+
+A continuación, se detalla:
+
+Archivo *paso3_main.c*
+
+- Línea 27. Referencia a *wordscounter_destroy()* indefinida.
+A pesar de que en el *.h* se declara la función mencionada, podemos
+ver que en el *.c* no se la define. El error ocurre cuando se quiere
+llamar a la función, con lo cual se da en la etapa de linkedición.
