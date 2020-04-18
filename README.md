@@ -137,3 +137,61 @@ Todos los errores mencionados pertenecen a la etapa de compilación.
 El sistema no reportó ningún *warning*. Esto se debe a que el SERCOM compila
 con el flag *-Werror*, el cual implica que todos los *warnings* se traten
 como *errores*.
+
+#### Paso 2: SERCOM - Errores de generación 2
+
+#### a)
+
+Respecto de la versión anterior, se realizaron las siguientes correcciones:
+
+- Se incluyó el archivo *paso2_wordscounter.h*. Esto soluciona el error de
+las declaraciones implícitas y del tipo desconocido.
+- Se reemplazó la función *strcpy()* por *memcpy()*, la cual indica
+la cantidad de caracteres a leer
+- Se colocaron las llaves de los *else* en la misma línea
+- Se eliminaron los espacios innecesarios y asimétricos
+- Se agregaron los espacios faltantes entre cláusulas y condiciones
+- Se redujo la cantidad de caracteres de la línea que superaba
+el máximo estipulado de 80
+
+#### b)
+
+A continuación, se muestra la correcta ejecución de la verificación
+de las normas de programación:
+
+![img5](images/img5.png)
+
+#### c)
+
+Los errores de generación del ejecutable detectados por el SERCOM
+son los siguientes:
+
+![img6](images/img6.png)
+
+A continuación, se detalla cada uno:
+
+Archivo *paso2_wordscounter.h*
+
+- Línea 7. Tipo desconocido *size_t*. Para solucionarlo, debe agregarse
+la instrucción *#include <string.h>*. Este archivo pertenece a la librería
+estándar de C y, entre otras cosas, contiene la declaración del tipo
+mencionado
+- Línea 20. Ídem punto anterior
+- Línea 25. Tipo desconocido *FILE*. Similar al punto anterior, pero
+la instrucción faltante es *#include <stdio.h>*.
+
+Archivo *paso2_wordscounter.c*
+
+- Línea 1. Declaración previa de la función *wordscounter_get_words*.
+En este caso, esto se da por el no reconocimiento del tipo *size_t*.
+- Línea 17. Conflicto de tipos entre la declaración de la función
+*wordscounter_get_words()* en el *.h* y su definición en el *.c*.
+A pesar de que el tipo es el mismo (*size_t*), en el *.c* está
+incluido el archivo que lo define (*string.h*), mientras que en el *.h* no.
+Por este motivo, el compilador no los reconoce como un mismo tipo.
+- Línea 30. Declaración implícita de la función *malloc()*. Para solucionarlo,
+debe agregarse la instrucción *#include <stdlib.h>*. Este archivo pertenece
+a la librería estándar de C y, entre otras cosas, contiene la declaración
+de la función mencionada
+
+Todos los errores mencionados pertenecen a la etapa de compilación.
