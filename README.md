@@ -99,9 +99,9 @@ A continuación, se detalla cada uno:
 
 - Línea 27. Falta un espacio entre el *while* y el paréntesis de la condición
 - Línea 41. No coincide la cantidad de espacios al inicio y al final
-de la condición del *if*. Se tienen 2 y 0 espacios, respectivamente.
+de la condición del *if*. Se tienen 2 y 0 espacios, respectivamente
 - Línea 41. La cantidad de espacios al inicio y al final del *if*
-no es correcta. Deberían ser 0 ó 1, y se tienen 2 al inicio y 0 al final.
+no es correcta. Deberían ser 0 ó 1, y se tienen 2 al inicio y 0 al final
 - Línea 47. El *else* no está en la misma línea que la llave que cierra el *if*
 - Línea 47. Las llaves del *else* no están en la misma línea (es decir,
 la que cierra el *if* anterior y la que da comienzo al mismo *else*)
@@ -111,8 +111,8 @@ la que cierra el *if* anterior y la que da comienzo al mismo *else*)
 ##### Archivo *paso1_main.c*
 
 - Línea 12. En general, se recomienda el uso de la función *snprintf()*
-por sobre *strcpy()*. Esto es así ya que es más robusto y limita la cantidad
-de caracteres a leer, lo cual evita posibles *buffer overflows*.
+por sobre *strcpy()*. Esto es así ya que es más robusta y limita la cantidad
+de caracteres a leer, lo cual evita posibles *buffer overflows*
 - Línea 15. El *else* no está en la misma línea que la llave que cierra el *if*
 - Línea 15. Las llaves del *else* no están en la misma línea (es decir,
 la que cierra el *if* anterior y la que da comienzo al mismo *else*)
@@ -165,8 +165,8 @@ como *errores*.
 
 Respecto de la versión anterior, se realizaron las siguientes correcciones:
 
-- Se incluyó el archivo *paso2_wordscounter.h*. Esto soluciona el error de
-las declaraciones implícitas y del tipo desconocido.
+- Se incluyó el archivo *paso2_wordscounter.h* en *paso2_main.c*.
+Esto soluciona el error de las declaraciones implícitas y del tipo desconocido.
 - Se reemplazó la función *strcpy()* por *memcpy()*, la cual indica
 la cantidad de caracteres a leer
 - Se colocaron las llaves de los *else* en la misma línea
@@ -203,7 +203,7 @@ estándar de C y, entre otras cosas, contiene la declaración del tipo
 mencionado
 - Línea 20. Ídem punto anterior
 - Línea 25. Tipo desconocido *FILE*. Similar al punto anterior, pero
-la instrucción faltante es *#include <stdio.h>*.
+la instrucción faltante es *#include <stdio.h>*
 
 ##### Archivo *paso2_wordscounter.c*
 
@@ -213,7 +213,7 @@ En este caso, esto se da por el no reconocimiento del tipo *size_t*.
 *wordscounter_get_words()* en el *.h* y su definición en el *.c*.
 A pesar de que el tipo es el mismo (*size_t*), en el *.c* está
 incluido el archivo que lo define (*string.h*), mientras que en el *.h* no.
-Por este motivo, el compilador no los reconoce como un mismo tipo.
+Por este motivo, el compilador no los reconoce como un mismo tipo
 - Línea 30. Declaración implícita de la función *malloc()*. Para solucionarlo,
 debe agregarse la instrucción *#include <stdlib.h>*. Este archivo pertenece
 a la librería estándar de C y, entre otras cosas, contiene la declaración
@@ -230,10 +230,10 @@ Todos los errores mencionados pertenecen a la etapa de compilación.
 Respecto de la versión anterior, se realizaron las siguientes correcciones:
 
 - Se incluyó el archivo *stdlib.h* en *paso3_wordscounter.c*.
-Esto soluciona la declaración implícita de la función *malloc()*.
+Esto soluciona la declaración implícita de la función *malloc()*
 - Se incluyeron los archivos *string.h* y *stdio.h* en *paso3_wordscounter.h*.
 Esto soluciona el error de los tipos desconocidos *size_t* y *FILE*. A su vez,
-en el caso del *size_t*, resuelve el conflicto de tipos de la línea 17.
+en el caso del *size_t*, resuelve el conflicto de tipos de la línea 17
 
 <br>
 
@@ -251,7 +251,7 @@ A continuación, se detalla:
 - Línea 27. Referencia a *wordscounter_destroy()* indefinida.
 A pesar de que en el *.h* se declara la función mencionada, podemos
 ver que en el *.c* no se la define. El error ocurre cuando se quiere
-llamar a la función, con lo cual se da en la etapa de linkedición.
+llamar a la función, con lo cual se da en la etapa de linkedición
 
 <br>
 
@@ -278,12 +278,12 @@ Los errores detectados por Valgrind son:
 
 - Línea 14. Se abre el archivo de entrada con la función *fopen()*
 pero nunca se lo cierra con *fclose()*. Como indica el mensaje, hay
-344 bytes que se perderían, aunque aún son recuperables.
+344 bytes que se perderían, aunque aún son recuperables
 - Línea 24. Se invoca la función *wordscounter_process()*, la cual llama
 a *wordscounter_next_state()*, dentro de la cual se reserva memoria
 para los 7 delimitadores pero nunca se la libera. Eso implica una
 pérdida definitiva de 1505 bytes, ya que cada vez que se sale de la función
-se pierde la referencia a esa locación en memoria.
+se pierde la referencia a esa locación en memoria
 
 <br>
 
@@ -300,7 +300,7 @@ Los errores detectados por Valgrind son:
 - Línea 13. Se detectó un *buffer overflow*. Ocurre ya que el buffer
 reservado para almacenar el nombre del archivo es de 30 caracteres de largo,
 pero el archivo en cuestión tiene 33 caracteres. Esto desencadena
-en una escritura de memoria desconocida, no reservada para tal fin.
+en una escritura de memoria desconocida, no reservada para tal fin
 
 <br>
 
@@ -369,7 +369,7 @@ recibir un 1 (ya que el archivo de prueba contiene una única palabra).
 Esto se puede apreciar en la columna de *Observaciones*.
 
 El error radica en que cuando se llega al último carácter de la palabra,
-se compara el siguiente con *EOF (End of File)* y, de ser así,
+se compara el siguiente con *EOF (End Of File)* y, de ser así,
 se actualiza el estado del contador a *finalizado*, sin previamente
 haber incrementado la cantidad de palabras en uno.
 
@@ -385,7 +385,7 @@ El último carácter del archivo *input_single_word.txt* es "d",
 representado en hexadecimal con el número 64.
 
 Cabe destacar que todos los archivos tienen un carácter especial
-para indicar la finalización del mismo. Es conocido como *EOF (End of File)*.
+para indicar la finalización del mismo. Es conocido como *EOF (End Of File)*.
 
 <br>
 
