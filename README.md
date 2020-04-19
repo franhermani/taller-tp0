@@ -369,3 +369,33 @@ El debugger no se detuvo en la línea 45 porque el flujo del programa
 nunca llega a ejecutarla. De hecho, este es el motivo por el cual
 falla la prueba *Single Word*: nunca se incrementa la cantidad de palabras.
 El motivo de esto fue explicado en el inciso *b*.
+
+#### Paso 6: SERCOM - Entrega exitosa
+
+#### a)
+
+Respecto de la versión anterior, se realizaron las siguientes correcciones:
+
+- Se redefinió el código de error al valor esperado por el SERCOM (-1).
+Gracias a esto, la prueba *Invalid File* ahora pasa con éxito
+- Se definieron los delimitadores en una variable global
+- Se corrigió el algoritmo propiamente dicho para que procese
+adecuadamente archivos de una única palabra. Más precisamente,
+la nueva condición de la línea 45 es la encargada de atrapar este caso borde,
+ya que evalúa si se llega al *EOF* al estar procesando la primera palabra,
+en cuyo caso incrementa la cantidad en uno.
+Gracias a esto, la prueba *Single Word* ahora pasa con éxito
+
+#### b)
+
+A continuación, se muestran todas las entregas realizadas,
+tanto exitosas como fallidas:
+
+![img15](images/img15.png)
+
+#### c)
+
+A continuación, se muestra la ejecución de la prueba *Single Word*
+de forma local, en sus tres variantes:
+
+![img16](images/img16.png)
