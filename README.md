@@ -1,10 +1,12 @@
-### Nombre: Francisco Hermani
+# Nombre: Francisco Hermani
 
-### Padrón: 98223
+# Padrón: 98223
 
 Link GitHub: https://github.com/franhermani/taller-tp0
 
-#### Paso 0: Entorno de trabajo
+<br>
+
+## Paso 0: Entorno de trabajo
 
 #### a)
 Ejecución del aplicativo sin Valgrind
@@ -14,6 +16,8 @@ Ejecución del aplicativo sin Valgrind
 Ejecución del aplicativo con Valgrind
 
 ![img2](images/img2.png)
+
+<br>
 
 #### b)
 
@@ -25,6 +29,8 @@ pérdidas y errores de memoria en un programa dado, tales como:
 
 Sus opciones más comunes son *Memcheck*, *Addrcheck* y *Helgrind*.
 
+<br>
+
 #### c)
 
 El operador *sizeof()* representa el espacio en bytes que
@@ -32,6 +38,8 @@ ocupa en memoria el tipo de dato recibido por parámetro.
 
 El valor de salida de *sizeof(char)* será de 1 byte,
 mientras que el de *sizeof(int)* será de 4 bytes.
+
+<br>
 
 #### d)
 
@@ -54,9 +62,11 @@ entonces se dará la igualdad. En este caso,
 En cambio, si tenemos un struct B con un elemento tipo *char*
 y otro tipo *int*, entonces no se dará la igualdad, ya que
 el compilador aplicará padding para lograr la alineación mencionada.
-En este caso *sizeof(B) = sizeof(char) + 3 bytes de padding
-+ sizeof(int) = 1 + 3 + 4 = 8*, mientras que la suma de los *sizeof()*
-de sus elementos es *sizeof(char) + sizeof(int) = 1 + 4 = 5*
+En este caso *sizeof(B) = sizeof(char) + 3 bytes de padding + sizeof(int) =
+1 + 3 + 4 = 8*, mientras que la suma de los *sizeof()* de sus elementos es
+*sizeof(char) + sizeof(int) = 1 + 4 = 5*
+
+<br>
 
 #### e)
 
@@ -70,10 +80,12 @@ la salida a un archivo de texto plano, utilizar la sintaxis *./tp > archivo*
 La redirección funciona igual que en STDOUT
 
 Por otro lado, para conectar la salida estándar de un *programa1*
-con la entrada estándar de un *programa2*, utilizar la sintaxis
+con la entrada estándar de un *programa2*, se debe utilizar la sintaxis
 *programa1 | programa2*
 
-#### Paso 1: SERCOM - Errores de generación y normas de programación
+<br>
+
+## Paso 1: SERCOM - Errores de generación y normas de programación
 
 #### a)
 
@@ -83,7 +95,8 @@ Los problemas de estilo detectados por el SERCOM son los siguientes:
 
 A continuación, se detalla cada uno:
 
-Archivo *paso1_wordscounter.c*
+##### Archivo *paso1_wordscounter.c*
+
 - Línea 27. Falta un espacio entre el *while* y el paréntesis de la condición
 - Línea 41. No coincide la cantidad de espacios al inicio y al final
 de la condición del *if*. Se tienen 2 y 0 espacios, respectivamente.
@@ -95,7 +108,8 @@ la que cierra el *if* anterior y la que da comienzo al mismo *else*)
 - Línea 48. Falta un espacio entre el *if* y el paréntesis de la condición
 - Línea 53. Sobra un espacio entre el valor de retorno y el carácter ";"
 
-Archivo *paso1_main.c*
+##### Archivo *paso1_main.c*
+
 - Línea 12. En general, se recomienda el uso de la función *snprintf()*
 por sobre *strcpy()*. Esto es así ya que es más robusto y limita la cantidad
 de caracteres a leer, lo cual evita posibles *buffer overflows*.
@@ -103,9 +117,12 @@ de caracteres a leer, lo cual evita posibles *buffer overflows*.
 - Línea 15. Las llaves del *else* no están en la misma línea (es decir,
 la que cierra el *if* anterior y la que da comienzo al mismo *else*)
 
-Archivo *paso1_wordscounter.h*
+##### Archivo *paso1_wordscounter.h*
+
 - Línea 5. La línea supera la cantidad de caracteres máxima recomendada
 por línea de código (83 > 80)
+
+<br>
 
 #### b)
 
@@ -116,7 +133,7 @@ son los siguientes:
 
 A continuación, se detalla cada uno:
 
-Archivo *paso1_main.c*
+##### Archivo *paso1_main.c*
 
 - Línea 22. Tipo desconocido *wordscounter_t*. Ocurre porque no se incluyó
 el archivo *paso1_wordscounter.h*, en el cual se define el tipo mencionado
@@ -132,13 +149,17 @@ Ocurre por el mismo motivo que el punto anterior
 
 Todos los errores mencionados pertenecen a la etapa de compilación.
 
+<br>
+
 #### c)
 
 El sistema no reportó ningún *warning*. Esto se debe a que el SERCOM compila
 con el flag *-Werror*, el cual implica que todos los *warnings* se traten
 como *errores*.
 
-#### Paso 2: SERCOM - Errores de generación 2
+<br>
+
+## Paso 2: SERCOM - Errores de generación 2
 
 #### a)
 
@@ -154,12 +175,16 @@ la cantidad de caracteres a leer
 - Se redujo la cantidad de caracteres de la línea que superaba
 el máximo estipulado de 80
 
+<br>
+
 #### b)
 
 A continuación, se muestra la correcta ejecución de la verificación
 de las normas de programación:
 
 ![img5](images/img5.png)
+
+<br>
 
 #### c)
 
@@ -170,7 +195,7 @@ son los siguientes:
 
 A continuación, se detalla cada uno:
 
-Archivo *paso2_wordscounter.h*
+##### Archivo *paso2_wordscounter.h*
 
 - Línea 7. Tipo desconocido *size_t*. Para solucionarlo, debe agregarse
 la instrucción *#include <string.h>*. Este archivo pertenece a la librería
@@ -180,7 +205,7 @@ mencionado
 - Línea 25. Tipo desconocido *FILE*. Similar al punto anterior, pero
 la instrucción faltante es *#include <stdio.h>*.
 
-Archivo *paso2_wordscounter.c*
+##### Archivo *paso2_wordscounter.c*
 
 - Línea 1. Declaración previa de la función *wordscounter_get_words*.
 En este caso, esto se da por el no reconocimiento del tipo *size_t*.
@@ -196,7 +221,9 @@ de la función mencionada
 
 Todos los errores mencionados pertenecen a la etapa de compilación.
 
-#### Paso 3: SERCOM - Errores de generación 3
+<br>
+
+## Paso 3: SERCOM - Errores de generación 3
 
 #### a)
 
@@ -208,6 +235,8 @@ Esto soluciona la declaración implícita de la función *malloc()*.
 Esto soluciona el error de los tipos desconocidos *size_t* y *FILE*. A su vez,
 en el caso del *size_t*, resuelve el conflicto de tipos de la línea 17.
 
+<br>
+
 #### b)
 
 El error de generación del ejecutable detectado por el SERCOM
@@ -217,14 +246,16 @@ es el siguiente:
 
 A continuación, se detalla:
 
-Archivo *paso3_main.c*
+##### Archivo *paso3_main.c*
 
 - Línea 27. Referencia a *wordscounter_destroy()* indefinida.
 A pesar de que en el *.h* se declara la función mencionada, podemos
 ver que en el *.c* no se la define. El error ocurre cuando se quiere
 llamar a la función, con lo cual se da en la etapa de linkedición.
 
-### Paso 4: SERCOM - *Memory Leaks* y *Buffer Overflows*
+<br>
+
+## Paso 4: SERCOM - *Memory Leaks* y *Buffer Overflows*
 
 #### a)
 
@@ -232,6 +263,8 @@ Respecto de la versión anterior, se realizó la siguiente corrección:
 
 - Se definió la función *wordscounter_destroy()* en el *.c*.
 Esto soluciona el error del Linker mencionado en el punto anterior
+
+<br>
 
 #### b)
 
@@ -241,7 +274,7 @@ Resultado de la ejecución con Valgrind de la prueba *TDA*:
 
 Los errores detectados por Valgrind son:
 
-Archivo *paso4_main.c*
+##### Archivo *paso4_main.c*
 
 - Línea 14. Se abre el archivo de entrada con la función *fopen()*
 pero nunca se lo cierra con *fclose()*. Como indica el mensaje, hay
@@ -252,6 +285,8 @@ para los 7 delimitadores pero nunca se la libera. Eso implica una
 pérdida definitiva de 1505 bytes, ya que cada vez que se sale de la función
 se pierde la referencia a esa locación en memoria.
 
+<br>
+
 #### c)
 
 Resultado de la ejecución con Valgrind de la prueba *Long Filename*:
@@ -260,12 +295,14 @@ Resultado de la ejecución con Valgrind de la prueba *Long Filename*:
 
 Los errores detectados por Valgrind son:
 
-Archivo *paso4_main.c*
+##### Archivo *paso4_main.c*
 
 - Línea 13. Se detectó un *buffer overflow*. Ocurre ya que el buffer
 reservado para almacenar el nombre del archivo es de 30 caracteres de largo,
 pero el archivo en cuestión tiene 33 caracteres. Esto desencadena
 en una escritura de memoria desconocida, no reservada para tal fin.
+
+<br>
 
 #### d)
 
@@ -275,6 +312,8 @@ Esto es así porque *strncpy()* copia *n* caracteres de un lugar a otro,
 a menos que encuentre el carácter nulo antes, lo cual no ocurre en este caso.
 Así, se copiarían 33 caracteres en un buffer de 30, generando
 el mencionado *buffer overflow*.
+
+<br>
 
 #### e)
 
@@ -289,7 +328,9 @@ en un lugar de memoria desconocido. Es lo que ocurrió con *memcpy()*.
 Esto puede alterar el flujo normal de un programa y tener consecuencias
 inimaginables.
 
-#### Paso 5: SERCOM - Código de retorno y salida estándar
+<br>
+
+## Paso 5: SERCOM - Código de retorno y salida estándar
 
 Respecto de la versión anterior, se realizaron las siguientes correcciones:
 
@@ -300,6 +341,8 @@ Esto soluciona la pérdida de los 344 bytes recuperables
 - Los delimitadores se almacenan en una cadena de caracteres,
 ya no se reserva memoria para ellos. Esto soluciona la pérdida
 definitiva de los 1505 bytes que se daba por no liberar la memoria reservada
+
+<br>
 
 #### b)
 
@@ -330,6 +373,8 @@ se compara el siguiente con *EOF (End of File)* y, de ser así,
 se actualiza el estado del contador a *finalizado*, sin previamente
 haber incrementado la cantidad de palabras en uno.
 
+<br>
+
 #### c)
 
 A continuación, se muestra la ejecución del comando *hexdump*:
@@ -341,6 +386,8 @@ representado en hexadecimal con el número 64.
 
 Cabe destacar que todos los archivos tienen un carácter especial
 para indicar la finalización del mismo. Es conocido como *EOF (End of File)*.
+
+<br>
 
 #### d)
 
@@ -370,7 +417,9 @@ nunca llega a ejecutarla. De hecho, este es el motivo por el cual
 falla la prueba *Single Word*: nunca se incrementa la cantidad de palabras.
 El motivo de esto fue explicado en el inciso *b*.
 
-#### Paso 6: SERCOM - Entrega exitosa
+<br>
+
+## Paso 6: SERCOM - Entrega exitosa
 
 #### a)
 
@@ -386,12 +435,16 @@ ya que evalúa si se llega al *EOF* al estar procesando la primera palabra,
 en cuyo caso incrementa la cantidad en uno.
 Gracias a esto, la prueba *Single Word* ahora pasa con éxito
 
+<br>
+
 #### b)
 
 A continuación, se muestran todas las entregas realizadas,
 tanto exitosas como fallidas:
 
 ![img15](images/img15.png)
+
+<br>
 
 #### c)
 
