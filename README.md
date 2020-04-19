@@ -223,3 +223,68 @@ Archivo *paso3_main.c*
 A pesar de que en el *.h* se declara la función mencionada, podemos
 ver que en el *.c* no se la define. El error ocurre cuando se quiere
 llamar a la función, con lo cual se da en la etapa de linkedición.
+
+### Paso 4: SERCOM - *Memory Leaks* y *Buffer Overflows*
+
+#### a)
+
+Respecto de la versión anterior, se realizaó la siguiente corrección:
+
+- Se definió la función *wordscounter_destroy()* en el *.c*.
+Esto soluciona el error del Linker mencionado en el punto anterior
+
+#### b)
+
+Resultado de la ejecución con Valgrind de la prueba *TDA*:
+
+![img8](images/img8.png)
+
+Los errores detectados por Valgrind son:
+
+Archivo *paso4_main.c*
+
+- Línea 14. Se abre el archivo de entrada con la función *fopen()*
+pero nunca se lo cierra con *fclose()*. Como indica el mensaje, hay
+344 bytes que se perderían, aunque aún son recuperables.
+- Línea 24. Se invoca la función *wordscounter_process()*, la cual llama
+a *wordscounter_next_state()*, dentro de la cual se reserva memoria
+para los 7 delimitadores pero nunca se la libera. Eso implica una
+pérdida definitiva de 1505 bytes, ya que cada vez que se sale de la función
+se pierde la referencia a esa locación en memoria.
+
+#### c)
+
+Resultado de la ejecución con Valgrind de la prueba *Long Filename*:
+
+![img9](images/img9.png)
+
+Los errores detectados por Valgrind son:
+
+Archivo *paso4_main.c*
+
+- Línea 13. Se detectó un *buffer overflow*. Ocurre ya que el buffer
+reservado para almacenar el nombre del archivo es de 30 caracteres de largo,
+pero el archivo en cuestión tiene 33 caracteres. Esto desencadena
+en una escritura de memoria desconocida, no reservada para tal fin.
+
+#### d)
+
+Utilizar *strncpy()* en lugar de *memcpy()* no solucionaría el error.
+De hecho, la ejecución de la prueba habría sido exactamente la misma.
+Esto es así porque *strncpy()* copia *n* caracteres de un lugar a otro,
+a menos que encuentre el caracter nulo antes, lo cual no ocurre en este caso.
+Así, se copiarían 33 caracteres en un buffer de 30, generando
+el mencionado *buffer overflow*.
+
+#### e)
+
+Un *segmentation fault* es una violación de segmento que tiene lugar
+cuando se intenta acceder a un espacio en memoria para el cual
+no se tienen los permisos necesarios. Por ejemplo, si se quiere escribir
+una sección en memoria que es de sólo lectura.
+
+Un *buffer overflow* es una sobrecarga del buffer que tiene lugar
+cuando se supera la capacidad de un buffer y se escriben bytes de más
+en un lugar de memoria desconocido. Es lo que ocurrió con *memcpy()*.
+Esto puede alterar el flujo normal de un programa y tener consecuencias
+inimaginables.
