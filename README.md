@@ -228,7 +228,7 @@ llamar a la función, con lo cual se da en la etapa de linkedición.
 
 #### a)
 
-Respecto de la versión anterior, se realizaó la siguiente corrección:
+Respecto de la versión anterior, se realizó la siguiente corrección:
 
 - Se definió la función *wordscounter_destroy()* en el *.c*.
 Esto soluciona el error del Linker mencionado en el punto anterior
@@ -272,7 +272,7 @@ en una escritura de memoria desconocida, no reservada para tal fin.
 Utilizar *strncpy()* en lugar de *memcpy()* no solucionaría el error.
 De hecho, la ejecución de la prueba habría sido exactamente la misma.
 Esto es así porque *strncpy()* copia *n* caracteres de un lugar a otro,
-a menos que encuentre el caracter nulo antes, lo cual no ocurre en este caso.
+a menos que encuentre el carácter nulo antes, lo cual no ocurre en este caso.
 Así, se copiarían 33 caracteres en un buffer de 30, generando
 el mencionado *buffer overflow*.
 
@@ -288,3 +288,84 @@ cuando se supera la capacidad de un buffer y se escriben bytes de más
 en un lugar de memoria desconocido. Es lo que ocurrió con *memcpy()*.
 Esto puede alterar el flujo normal de un programa y tener consecuencias
 inimaginables.
+
+#### Paso 5: SERCOM - Código de retorno y salida estándar
+
+Respecto de la versión anterior, se realizaron las siguientes correcciones:
+
+- La ruta del archivo de entrada se lee directamente de la línea de comandos,
+sin el uso intermedio de un buffer. Esto soluciona el *buffer overflow*
+- En caso de abrir el archivo de entrada, se lo cierra apropiadamente.
+Esto soluciona la pérdida de los 344 bytes recuperables
+- Los delimitadores se almacenan en una cadena de caracteres,
+ya no se reserva memoria para ellos. Esto soluciona la pérdida
+definitiva de los 1505 bytes que se daba por no liberar la memoria reservada
+
+#### b)
+
+##### Prueba *Invalid File*
+
+La información que entrega el SERCOM respecto al error en la prueba
+*Invalid File* es la siguiente:
+
+![img10](images/img10.png)
+
+Lo que ocurre es que el programa, al no encontrar el archivo especificado,
+devuelve un código de error igual a -1, cuando el SERCOM espera recibir un 1.
+Esto se puede apreciar en la columna de *Observaciones*.
+
+##### Prueba *Single Word*
+
+La información que entrega el SERCOM respecto al error en la prueba
+*Single Word* es la siguiente:
+
+![img11](images/img11.png)
+
+Lo que ocurre es que el valor devuelto es 0, cuando el SERCOM espera
+recibir un 1 (ya que el archivo de prueba contiene una única palabra).
+Esto se puede apreciar en la columna de *Observaciones*.
+
+El error radica en que cuando se llega al último carácter de la palabra,
+se compara el siguiente con *EOF (End of File)* y, de ser así,
+se actualiza el estado del contador a *finalizado*, sin previamente
+haber incrementado la cantidad de palabras en uno.
+
+#### c)
+
+A continuación, se muestra la ejecución del comando *hexdump*:
+
+![img12](images/img12.png)
+
+El último carácter del archivo *input_single_word.txt* es "d",
+representado en hexadecimal con el número 64.
+
+Cabe destacar que todos los archivos tienen un carácter especial
+para indicar la finalización del mismo. Es conocido como *EOF (End of File)*.
+
+#### d)
+
+A continuación, se muestra el resultado de la ejecución con *gdb*:
+
+![img13](images/img13.png)
+![img14](images/img14.png)
+
+Los comandos utilizados fueron:
+
+- *info functions*. Devuelve las funciones definidas
+en los archivos analizados
+- *list wordscounter_next_state*. Devuelve las 10 líneas que
+se encuentran alrededor de la función recibida por parámetro
+- *list*. Devuelve las 10 líneas siguientes a la última línea devuelta.
+En caso de no haber utilizado ningún comando del tipo *list* anteriormente,
+empieza por la primera línea del archivo
+- *break 45*. Genera un punto de quiebre en la línea recibida por parámetro.
+Éste se encargará de pausar la ejecución del programa en el instante previo
+a la instrucción ubicada en dicha línea
+- *run input_single_word.txt*. Comienza la ejecución del programa
+con el archivo de entrada recibido por parámetro
+- *quit*. Sale de *gdb*
+
+El debugger no se detuvo en la línea 45 porque el flujo del programa
+nunca llega a ejecutarla. De hecho, este es el motivo por el cual
+falla la prueba *Single Word*: nunca se incrementa la cantidad de palabras.
+El motivo de esto fue explicado en el inciso *b*.
